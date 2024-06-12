@@ -60,7 +60,8 @@ function BackCardContent() {
 
 function CardManagementContent() {
   return (
-    <div className="flex justify-center gap-2 p-8">
+    <div className="flex flex-col justify-center gap-2 p-8">
+      <div>카드 가이드입니다. 카드를 등록하고 관리할 수 있습니다.</div>
       <NotReadyAlert>
         <AlertDialogTrigger asChild>
           <Button variant="outline">카드 등록</Button>
@@ -295,11 +296,11 @@ function CardList({ onClick }: CardListProps) {
     },
   ];
   return (
-    <ul className="grid grid-cols-1 grid-rows-2 gap-2 ">
+    <ul className="grid grid-cols-1 grid-rows-2 gap-2">
       {cardContentList.map(({ cardContent, cardBackContent }, index) => {
         return (
           <li
-            className={`sticky top-10`}
+            className={`sticky top-14`}
             key={index}
             style={{ paddingTop: `${index * 30}px` }}
           >

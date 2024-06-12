@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <div className="w-[400px] m-auto">
       <Tabs defaultValue="certificate" className="w-[400px]">
-        <TabsList className="sticky top-0">
+        <TabsList className="sticky top-2">
           <TabsTrigger value="certificate">증빙</TabsTrigger>
           <TabsTrigger value="pay">결제</TabsTrigger>
         </TabsList>
