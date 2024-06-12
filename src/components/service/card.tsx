@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import { LuLink } from "react-icons/lu";
+import { BiExport } from "react-icons/bi";
 
 import { AvatarFallback, Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -11,17 +13,47 @@ const CARD_HEIGHT = 921;
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   cardContent: React.ReactNode;
+  isBack?: boolean;
+  cardBackContent?: React.ReactNode;
 }
 
-function Card({ cardContent, onClick }: CardProps) {
+function Card({
+  cardContent,
+  cardBackContent,
+  onClick,
+  isBack = false,
+}: CardProps) {
   return (
     <div
-      className="
-      card lightning / interactive masked 
-      border aspect-card bg-background rounded-xl overflow-hidden"
+      className="border aspect-card bg-background rounded-xl overflow-hidden"
       onClick={onClick}
     >
-      {cardContent ?? cardContent}
+      {!isBack ? cardContent : cardBackContent}
+    </div>
+  );
+}
+
+function BackCardContent() {
+  return (
+    <div className="flex flex-col items-center h-full justify-center">
+      <Image src="/qr_code.svg" width={200} height={200} alt="qr-code" />
+      <div>
+        <Button variant="ghost" asChild className="w-[60px] h-[60px]">
+          <Image
+            src="/Instagram_Glyph_Gradient.svg"
+            width={60}
+            height={60}
+            alt="icon_instagram
+        "
+          />
+        </Button>
+        <Button variant="ghost" asChild className="w-[60px] h-[60px]">
+          <LuLink className="w-[60px] h-[60px]" />
+        </Button>
+        <Button variant="ghost" asChild className="w-[60px] h-[60px]">
+          <BiExport className="w-[60px] h-[60px]" />
+        </Button>
+      </div>
     </div>
   );
 }
@@ -82,7 +114,6 @@ function AppCardContent() {
             <AvatarFallback delayMs={600}>4sizn</AvatarFallback>
           </Avatar>
         </div>
-
         <h2 className="text-2xl font-bold text-black pt-5">heeseok Shin</h2>
         <h3 className="text-sm text-slate-600">Frontend Developer</h3>
         <div className="text-sm text-slate-600">custom company</div>
@@ -150,6 +181,7 @@ function CardList({ onClick }: CardListProps) {
   const cardContentList = [
     {
       cardContent: <AppCardContent />,
+      cardBackContent: <BackCardContent />,
     },
     {
       cardContent: (
@@ -264,14 +296,22 @@ function CardList({ onClick }: CardListProps) {
   ];
   return (
     <ul className="grid grid-cols-1 grid-rows-2 gap-2 ">
-      {cardContentList.map(({ cardContent }, index) => {
+      {cardContentList.map(({ cardContent, cardBackContent }, index) => {
         return (
           <li
             className={`sticky top-10`}
             key={index}
             style={{ paddingTop: `${index * 30}px` }}
           >
-            <Card cardContent={cardContent} onClick={onClick} />
+            <Card
+              cardContent={cardContent}
+              onClick={onClick}
+              {
+                /* cardBackContent */
+                ...(cardBackContent && { cardBackContent })
+              }
+              isBack={cardBackContent ? true : false}
+            />
           </li>
         );
       })}
